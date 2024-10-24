@@ -1,0 +1,32 @@
+{% extends 'todo/base.html' %}
+{% load form_tags %}
+
+{% block content %}
+<h1 class="my-4 text-center">Add To-Do Item</h1>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.title.label_tag }}
+                {{ form.title|add_class:"form-control" }}
+            </div>
+            <div class="mb-3">
+                {{ form.description.label_tag }}
+                {{ form.description|add_class:"form-control" }}
+            </div>
+            <div class="form-check mb-3">
+                {{ form.completed|add_class:"form-check-input" }}  
+                <label class="form-check-label" for="{{ form.completed.id_for_label }}">{{ form.completed.label }}</label>
+            </div>            
+            <button type="submit" class="btn btn-success w-100">Add Task</button>
+        </form>
+    </div>
+</div>
+
+<div class="text-center mt-3">
+    <a href="{% url 'todo_list' %}" class="btn btn-secondary">Back to List</a>
+</div>
+
+{% endblock %}

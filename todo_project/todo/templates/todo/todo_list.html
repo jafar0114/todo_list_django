@@ -1,0 +1,38 @@
+{% extends 'todo/base.html' %}
+
+{% block content %}
+<h1 class="my-4 text-center">To-Do List</h1>
+
+<div class="card mb-4">
+    <div class="card-header">
+        Your Tasks
+    </div>
+    <ul class="list-group list-group-flush">
+        {% for todo in todos %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    {% if todo.completed %}
+                        <strike>{{ todo.title }}</strike>
+                        <span class="badge bg-success">Completed</span>
+                    {% else %}
+                        {{ todo.title }}
+                    {% endif %}
+                </div>
+                <div>
+                    {% if not todo.completed %}
+                        <a href="{% url 'mark_as_completed' todo.id %}" class="btn btn-sm btn-primary">Mark as Completed</a>
+                    {% endif %}
+                    <a href="{% url 'delete_todo' todo.id %}" class="btn btn-sm btn-danger">Delete</a>
+                </div>
+            </li>
+        {% empty %}
+            <li class="list-group-item text-center">No tasks yet!</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="text-center">
+    <a href="{% url 'add_todo' %}" class="btn btn-success">Add New Task</a>
+</div>
+
+{% endblock %}
